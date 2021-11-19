@@ -1,10 +1,10 @@
 #ifndef ITER_INTERFACE_HPP
-# define INTER_INTERFACE_HPP
+# define ITER_INTERFACE_HPP
 
 # include "Utils.hpp"
 
 //? -- INTERFACCIA ITERATORE --
-//* / Tutte le definizioni sono negli altri header file \
+//* / Tutte le definizioni sono negli altri header file
 namespace ft {
 
 	template<typename T>
@@ -18,31 +18,32 @@ namespace ft {
 
 		Iterator(void);
 		Iterator(T *value); //* Qui possiamo passare un valore per inizializzare
-		Iterator(T const &copy);
+		Iterator(Iterator const &copy);
 		virtual ~Iterator(void);
-		Iterator &operator=(T const &rhs);
+		Iterator &operator=(Iterator const &rhs);
 
 		//? Operator Override tra Iteratori
 
-		bool	operator==(T const &rhs) const;
-		bool	operator!=(T const &rhs) const;
-		bool	operator<(T const &rhs) const;
-		bool	operator<=(T const &rhs) const;
-		bool	operator>(T const &rhs) const;
-		bool	operator>=(T const &rhs) const;
+		bool	operator==(Iterator const &rhs) const;
+		bool	operator!=(Iterator const &rhs) const;
+		bool	operator<(Iterator const &rhs) const;
+		bool	operator<=(Iterator const &rhs) const;
+		bool	operator>(Iterator const &rhs) const;
+		bool	operator>=(Iterator const &rhs) const;
 
 		//? Iterator<T> restituisce un oggetto iteratore
+
 		Iterator<T>	&operator++(void);
 		Iterator<T>	&operator--(void);
 		Iterator<T>	operator++(int);
 		Iterator<T>	operator--(int);
 
-		difference_type		operator-(T const &rhs) const;
+		difference_type		operator-(Iterator const &rhs) const;
 		Iterator<T>			operator+(difference_type n) const;
 		Iterator<T>			operator-(difference_type n) const;
 
 		//* I metodi definiti con friend possono anche essere usati singolarmente al di fuori dello scope della classe
-		friend Iterator<T>	operator+(difference_type n, T const &rhs)
+		friend Iterator<T>	operator+(difference_type n, Iterator const &rhs)
 			{ return rhs.operator+(n); };	
 	};
 }

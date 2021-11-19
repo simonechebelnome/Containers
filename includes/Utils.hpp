@@ -32,7 +32,7 @@ namespace ft {
     template <bool, class isTrue = void>
     struct enable_if;
 
-    template <typaname isTrue>
+    template <typename isTrue>
     struct enable_if <true, isTrue> {
         typedef isTrue type;
     };
