@@ -8,7 +8,7 @@
 namespace ft {
 
 	template<typename T>
-	class Iterator {
+	class iterator {
 	protected:		
 		T		*_value; //* Questo è un puntatore al tipo di elemento che è stato passato, ergo, ne stiamo storando il valore
 	
@@ -16,34 +16,34 @@ namespace ft {
 		typedef T			value_type;
 		typedef ptrdiff_t	difference_type; //* Ptrdiff stora la differenza tra due puntatori
 
-		Iterator(void);
-		Iterator(T *value); //* Qui possiamo passare un valore per inizializzare
-		Iterator(Iterator const &copy);
-		virtual ~Iterator(void);
-		Iterator &operator=(Iterator const &rhs);
+		iterator(void);
+		iterator(T *value); //* Qui possiamo passare un valore per inizializzare
+		iterator(iterator const &copy);
+		virtual ~iterator(void);
+		iterator &operator=(iterator const &rhs);
 
-		//? Operator Override tra Iteratori
+		//? Operator Override tra iteratori
 
-		bool	operator==(Iterator const &rhs) const;
-		bool	operator!=(Iterator const &rhs) const;
-		bool	operator<(Iterator const &rhs) const;
-		bool	operator<=(Iterator const &rhs) const;
-		bool	operator>(Iterator const &rhs) const;
-		bool	operator>=(Iterator const &rhs) const;
+		bool	operator==(iterator const &rhs) const;
+		bool	operator!=(iterator const &rhs) const;
+		bool	operator<(iterator const &rhs) const;
+		bool	operator<=(iterator const &rhs) const;
+		bool	operator>(iterator const &rhs) const;
+		bool	operator>=(iterator const &rhs) const;
 
-		//? Iterator<T> restituisce un oggetto iteratore
+		//? iterator<T> restituisce un oggetto iteratore
 
-		Iterator<T>	&operator++(void);
-		Iterator<T>	&operator--(void);
-		Iterator<T>	operator++(int);
-		Iterator<T>	operator--(int);
+		iterator<T>	&operator++(void);
+		iterator<T>	&operator--(void);
+		iterator<T>	operator++(int);
+		iterator<T>	operator--(int);
 
-		difference_type		operator-(Iterator const &rhs) const;
-		Iterator<T>			operator+(difference_type n) const;
-		Iterator<T>			operator-(difference_type n) const;
+		difference_type		operator-(iterator const &rhs) const;
+		iterator<T>			operator+(difference_type n) const;
+		iterator<T>			operator-(difference_type n) const;
 
 		//* I metodi definiti con friend possono anche essere usati singolarmente al di fuori dello scope della classe
-		friend Iterator<T>	operator+(difference_type n, Iterator const &rhs)
+		friend iterator<T>	operator+(difference_type n, iterator const &rhs)
 			{ return rhs.operator+(n); };	
 	};
 }

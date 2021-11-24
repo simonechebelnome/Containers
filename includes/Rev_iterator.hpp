@@ -6,7 +6,7 @@
 
 namespace ft {
 	template<typename T>
-	class reverseIterator {
+	class reverse_iterator {
 	protected:
 		//* Si, è normale avere più typedef per lo stesso valore
 		typedef T   super;
@@ -18,10 +18,10 @@ namespace ft {
 		typedef typename super::reference			reference;
 		typedef typename super::pointer				pointer;
 
-		reverseIterator(void);
-		explicit reverseIterator(T iter); //! Con explicit questo costruttore non può effettuare conversioni implicite
-		reverseIterator(reverseIterator const &copy);
-		reverseIterator &operator=(reverseIterator const &copy);
+		reverse_iterator(void);
+		explicit reverse_iterator(T iter); //! Con explicit questo costruttore non può effettuare conversioni implicite
+		reverse_iterator(reverse_iterator const &copy);
+		reverse_iterator &operator=(reverse_iterator const &copy);
 		T base(void) const { return this->_base };
 
 		//* I metodi seguenti potranno essere usati solo dalle classi che ereditano (super si riferisce alla base class, questa)
@@ -31,42 +31,42 @@ namespace ft {
 		//? OPERATOR CON REFERENCE & = SUFFISSO
 		//? OPERATOR CON PARAMETRO(INT) = PREFISSO
 		//! Si tratta semplicemente di rendere il codice più leggibile e funzionale (passo 0 perchè di fatto non mi serve a niente l'argomento)
-		reverseIterator	&operator++(void) { this->_base.operator--(); return *this; };
-		reverseIterator	operator++(int) { return reverseIterator(this->_base.operator--(0)); };
-		reverseIterator	&operator--(void) { this->_base.operator++(); return *this; };
-		reverseIterator	operator--(int) { return reverseIterator(this->_base.operator++(0)); };
+		reverse_iterator	&operator++(void) { this->_base.operator--(); return *this; };
+		reverse_iterator	operator++(int) { return reverse_iterator(this->_base.operator--(0)); };
+		reverse_iterator	&operator--(void) { this->_base.operator++(); return *this; };
+		reverse_iterator	operator--(int) { return reverse_iterator(this->_base.operator++(0)); };
 
-		difference_type	operator-(reverseIterator const &u) { return u.base().operator-(this->_base); };
-		reverseIterator	operator+ (difference_type n) const { return reverseIterator(this->_base.operator-(n)); };
-		reverseIterator	&operator+=(difference_type n) { this->_base.operator-=(n); return *this; };
-		reverseIterator	operator- (difference_type n) const { return reverseIterator(this->_base.operator+(n)); };
-		reverseIterator	&operator-=(difference_type n) { this->_base.operator+=(n); return *this; };
+		difference_type	operator-(reverse_iterator const &u) { return u.base().operator-(this->_base); };
+		reverse_iterator	operator+ (difference_type n) const { return reverse_iterator(this->_base.operator-(n)); };
+		reverse_iterator	&operator+=(difference_type n) { this->_base.operator-=(n); return *this; };
+		reverse_iterator	operator- (difference_type n) const { return reverse_iterator(this->_base.operator+(n)); };
+		reverse_iterator	&operator-=(difference_type n) { this->_base.operator+=(n); return *this; };
 		reference		operator[](difference_type n) const { return *this->operator+(n); };
 
         //* Dato che stiamo usando friend sappiamo a priori che questo metodo sarà utilizzato al di fuori della classe
         //! Di conseguenza, l'operator overload DEVE PRENDERE DUE ARGOMENTI (lhs, rhs). Di norma il lhs è l'oggetto stesso (this) e non deve essere specificato
-        friend reverseIterator operator+(difference_type n, const reverseIterator &rhs)
+        friend reverse_iterator operator+(difference_type n, const reverse_iterator &rhs)
 			{ return rhs.operator+(n); };
         
-        template <class U> bool	operator==(const reverseIterator<U> &rhs) const { return this->_base.operator==(rhs.base()); };
-		template <class U> bool	operator!=(const reverseIterator<U> &rhs) const { return this->_base.operator!=(rhs.base()); };
-		template <class U> bool	operator< (const reverseIterator<U> &rhs) const { return this->_base.operator> (rhs.base()); };
-		template <class U> bool	operator<=(const reverseIterator<U> &rhs) const { return this->_base.operator>=(rhs.base()); };
-		template <class U> bool	operator> (const reverseIterator<U> &rhs) const { return this->_base.operator< (rhs.base()); };
-		template <class U> bool	operator>=(const reverseIterator<U> &rhs) const { return this->_base.operator<=(rhs.base()); };
+        template <class U> bool	operator==(const reverse_iterator<U> &rhs) const { return this->_base.operator==(rhs.base()); };
+		template <class U> bool	operator!=(const reverse_iterator<U> &rhs) const { return this->_base.operator!=(rhs.base()); };
+		template <class U> bool	operator< (const reverse_iterator<U> &rhs) const { return this->_base.operator> (rhs.base()); };
+		template <class U> bool	operator<=(const reverse_iterator<U> &rhs) const { return this->_base.operator>=(rhs.base()); };
+		template <class U> bool	operator> (const reverse_iterator<U> &rhs) const { return this->_base.operator< (rhs.base()); };
+		template <class U> bool	operator>=(const reverse_iterator<U> &rhs) const { return this->_base.operator<=(rhs.base()); };
 	};
 
     template <typename T>
-    reverseIterator<T>::reverseIterator(void) : _base() { };
+    reverse_iterator<T>::reverse_iterator(void) : _base() { };
 
     template <typename T>
-    reverseIterator<T>::reverseIterator(T x) : _base(x) { };
+    reverse_iterator<T>::reverse_iterator(T x) : _base(x) { };
 
     template <typename T>
-    reverseIterator<T>::reverseIterator(reverseIterator const &copy) : _base(u.base()) { };
+    reverse_iterator<T>::reverse_iterator(reverse_iterator const &copy) : _base(u.base()) { };
 
     template <typename T>
-    reverseIterator<T> &reverseIterator<T>::operator=(reverseIterator const &copy) {
+    reverse_iterator<T> &reverse_iterator<T>::operator=(reverse_iterator const &copy) {
         //* Usiamo un reinterpret cast per assicurarci che i due iteratori siano effettivamente uguali (cioè abbiano lo stesso valore)
         if (reinterpret_cast<const void *>(this) == reinterpret_cast<const void *>(&u))
             return (*this);

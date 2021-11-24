@@ -6,27 +6,27 @@
 namespace ft {
 
 	template <typename T>
-	Iterator<T>::Iterator(void) : _value(NULL) {
+	iterator<T>::iterator(void) : _value(NULL) {
 		return ;
 	}
 
 	template <typename T>
-	Iterator<T>::Iterator(T *src) : _value(src) {
+	iterator<T>::iterator(T *src) : _value(src) {
 		return ;
 	}
 
 	template <typename T>
-	Iterator<T>::Iterator(Iterator const &copy) {
+	iterator<T>::iterator(iterator const &copy) {
 		*this = src;
 	}
 
 	template <typename T>
-	Iterator<T>::~Iterator(void) {
+	iterator<T>::~iterator(void) {
 		return ;
 	}
 
 	template <typename T>
-	Iterator<T> &Iterator<T>::operator=(Iterator const &rhs) {
+	iterator<T> &iterator<T>::operator=(iterator const &rhs) {
 		if (this == &rhs)
 			return (*this);
 		*this->_value = rhs._value;
@@ -34,47 +34,47 @@ namespace ft {
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator==(Iterator const &rhs) const {
+	bool iterator<T>::operator==(iterator const &rhs) const {
 		return (this->_value == rhs._value);
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator!=(Iterator const &rhs) const {
+	bool iterator<T>::operator!=(iterator const &rhs) const {
 		return (this->_value != rhs._value);
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator<(Iterator const &rhs) const {
+	bool iterator<T>::operator<(iterator const &rhs) const {
 		return (this->_value < rhs._value);
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator<=(Iterator const &rhs) const {
+	bool iterator<T>::operator<=(iterator const &rhs) const {
 		return (this->_value <= rhs._value);
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator>(Iterator const &rhs) const {
+	bool iterator<T>::operator>(iterator const &rhs) const {
 		return (this->_value > rhs._value);
 	}
 
 	template <typename T>
-	bool Iterator<T>::operator>=(Iterator const &rhs) const {
+	bool iterator<T>::operator>=(iterator const &rhs) const {
 		return (this->_value >= rhs._value);
 	}
 
 	//? Queste due returnano l'iteratore prima che venga incrementato
 
 	template <typename T>
-	Iterator<T> Iterator<T>::operator++(int) {
-		Iterator<T>	tmp(*this);
+	iterator<T> iterator<T>::operator++(int) {
+		iterator<T>	tmp(*this);
 		++this->_value;
 		return(tmp);
 	}
 
 	template <typename T>
-	Iterator<T> Iterator<T>::operator--(int) {
-		Iterator<T>	tmp(*this);
+	iterator<T> iterator<T>::operator--(int) {
+		iterator<T>	tmp(*this);
 		--this->_value;
 		return(tmp);
 	}
@@ -82,31 +82,31 @@ namespace ft {
 	//? Questi returnano con il valore già incrementato
 
 	template <typename T>
-	Iterator<T> &Iterator<T>::operator++(void) {
+	iterator<T> &iterator<T>::operator++(void) {
 		++this->_value;
 		return(*this);
 	}
 
 	template <typename T>
-	Iterator<T> &Iterator<T>::operator--(void) {
+	iterator<T> &iterator<T>::operator--(void) {
 		--this->_value;
 		return(*this);
 	}
 
 	template <typename T>
-	typename Iterator<T>::difference_type
-		Iterator<T>::operator-(Iterator const &rhs) const {
+	typename iterator<T>::difference_type
+		iterator<T>::operator-(iterator const &rhs) const {
 			return(this->_value - rhs._value);
 	}
 
 	template <typename T>
-	Iterator<T>	Iterator<T>::operator+(difference_type n) const {
-			return(Iterator(this->_value + n));
+	iterator<T>	iterator<T>::operator+(difference_type n) const {
+			return(iterator(this->_value + n));
 	}
 
 	template <typename T>
-	Iterator<T>	Iterator<T>::operator-(difference_type n) const {
-			return(Iterator(this->_value - n));
+	iterator<T>	iterator<T>::operator-(difference_type n) const {
+			return(iterator(this->_value - n));
 	}
 }
 
