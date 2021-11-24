@@ -11,7 +11,7 @@
 namespace ft {
 
     //? choose <bool, true, false>
-    //* Dato un booleano, sceglie uno dei due parametri (ci servirà per l'enable if)
+    //* Dato un booleano, sceglie uno dei due parametri
 
     template <bool flag, typename isTrue, typename isFalse>
     struct choose;
