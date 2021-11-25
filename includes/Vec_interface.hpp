@@ -32,7 +32,7 @@ namespace ft {
 
         public:
             iterator(void) : RandIte<value_type>() {}; //* Default Constructor
-		    iterator(const iterator &src) : RandIte<value_type>(src) {}; //* Copy Constructor default
+            iterator(const iterator &src) : RandIte<value_type>(src) {}; //* Copy Constructor default
 
             typedef value_type&     reference;
             typedef value_type*     pointer;
@@ -41,24 +41,24 @@ namespace ft {
             //? Altri operatori (come +), modificano quell'oggetto in modo locale e devono returnare un valore
 
             reference			operator*(void) const;
-		    pointer				operator->(void) const;
-	    	const_iterator		&operator+=(difference_type n);
-		    const_iterator		&operator-=(difference_type n);
-		    reference			operator[](difference_type n) const;
+            pointer				operator->(void) const;
+            const_iterator		&operator+=(difference_type n);
+            const_iterator		&operator-=(difference_type n);
+            reference			operator[](difference_type n) const;
 
             //* Per le seguenti posso direttamente utilizzare i metodi della base class (super)
 
             difference_type		operator-(const RandIte<value_type> &n) const { return super::operator-(n); };
-		    iterator			operator-(difference_type n) const { return super::operator-(n); };
-		    iterator			operator+(difference_type n) const { return super::operator+(n); };
-		    friend iterator		operator+(difference_type n, const iterator &rhs) { return rhs.operator+(n); }; //? Lo stesso di sopra, ma può essere utilizzato fuori dalla classe
+            iterator			operator-(difference_type n) const { return super::operator-(n); };
+            iterator			operator+(difference_type n) const { return super::operator+(n); };
+            friend iterator		operator+(difference_type n, const iterator &rhs) { return rhs.operator+(n); }; //? Lo stesso di sopra, ma può essere utilizzato fuori dalla classe
 
             //* Ricordati ciò che si è detto su prefisso/suffisso (reverse_iterator)
 
             iterator			&operator++(void) { super::operator++(); return *this; };
-		    iterator			operator++(int) { return super::operator++(0); };
-		    iterator			&operator--(void) { super::operator--(); return *this; };
-		    iterator			operator--(int) { return super::operator--(0); };
+            iterator			operator++(int) { return super::operator++(0); };
+            iterator			&operator--(void) { super::operator--(); return *this; };
+            iterator			operator--(int) { return super::operator--(0); };
 
             //? Diamo a vector la possibilità di accedere a tutti i membri di questa classe, chiaramente
             friend class vector;
@@ -72,7 +72,7 @@ namespace ft {
             typedef RandIte<value_type> super;
             const_iterator(value_type *src) : RandIte<value_type>(src) {};
 
-		public:
+        public:
             const_iterator(void) : RandIte<value_type>() {};
             const_iterator(const RandIte<value_type> &src) : RandIte<value_type>(src) {};
 
@@ -95,12 +95,12 @@ namespace ft {
             const_iterator		&operator--(void) { super::operator--(); return *this; };
             const_iterator		operator--(int) { return super::operator--(0); };
 
-		    friend class vector;
+            friend class vector;
         };
 
         //* Infine, definiamo come tipi anche i due reverse_iterator
         typedef ft::reverse_iterator<iterator>			reverse_iterator;
-	    typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
         //* ------------- METODI CLASSE -------------
 
