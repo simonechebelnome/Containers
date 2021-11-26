@@ -18,6 +18,80 @@ namespace ft {
         return;
     }
 
+    template <typename T, typename Alloc> template <typename Ite>
+    vector<T, Alloc>::vector(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first,
+            Ite last, const allocator_type &alloc) : _data(NULL), _alloc(alloc), _size(0), _capacity(0) {
+        this->_create_data(ft::itlen(first, last), first, last);
+    }
+
+    template<typename T, typename Alloc>
+    vector<T, Alloc>::vector(vector const &src) : \
+        _data(NULL), _alloc(allocator_type()), _size(0), _capacity(0) {
+        *this = src;
+    }
+
+    template<typename T, typename Alloc>
+    vector<T, Alloc>::~vector(void) {
+        this->_destroy_data();
+    }
+
+    template<typename T, typename Alloc>
+    vector<T, Alloc>	&vector<T, Alloc>::operator=(vector const &rhs) {
+        if (this == &rhs)
+            return (*this);
+        const_iterator first = rhs.begin();
+        const_iterator last = rhs.end();
+        size_type len = ft::itlen(first, last);
+        this->_create_data((len > this->_capacity) ? len : this->_capacity, first, last);
+        return (*this);
+    }
+
+    //* ##### IMPLEMENTAZIONE ITERATORI #####
+    //? Nota come i tipi vadano ogni volta ridefiniti nell'implementazione
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::begin(void) {
+        return (iterator(this->_data));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin(void) const {
+        return (const_iterator(this->_data));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::end(void) {
+        return (iterator(&this->_data[this->_size]));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end(void) const {
+        return (const_iterator(&this->_data[this->_size]));
+    }
+
+    //! Nota come per il reverse_iterator il return value sia INVERTITO!
+    
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rbegin(void) {
+        return (reverse_iterator(&this->_data[this->_size]));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rbegin(void) const {
+        return (const_reverse_iterator(&this->_data[this->_size]));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rend(void) {
+        return (reverse_iterator(this->_data));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rend(void) const {
+        return (const_reverse_iterator(this->_data));
+    }
+
+
     //* ------ ATTRIBUTI PRIVATI -------
 
     template<typename T, typename Alloc> template <class Ite>

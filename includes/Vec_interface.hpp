@@ -109,10 +109,25 @@ namespace ft {
             const allocator_type &alloc = allocator_type());
         //? Enable if "abilita" quel tipo (Ite) solo se la condizione è vera, altrimenti non compila
         //! Il typename è valido qui sia per first che per last (sono entrambi Ite)
+        template<typename Ite>
         vector(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first,
             Ite last, const allocator_type &alloc = allocator_type());
         vector(const vector &src);
         virtual ~vector(void);
+
+        vector &operator=(const vector &rhs);
+
+        //* ###### METODI ITERATORI ######
+
+        iterator                begin(void);
+        const_iterator          begin(void) const;
+        iterator                end(void);
+        const_iterator          end(void) const;
+
+        reverse_iterator        rbegin(void);
+        const_reverse_iterator  rbegin(void) const;
+        reverse_iterator        rend(void);
+        const_reverse_iterator  rend(void) const;
 
     private:
         //* ------------- ATTRIBUTI CLASSE -------------
