@@ -103,9 +103,16 @@ namespace ft {
         typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
         //* ------------- METODI CLASSE -------------
+        
         explicit vector(const allocator_type &alloc = allocator_type()); //* Qui sto chiamando il costruttore di std::allocator
         explicit vector(size_type size, const value_type &val = value_type(),
             const allocator_type &alloc = allocator_type());
+        //? Enable if "abilita" quel tipo (Ite) solo se la condizione è vera, altrimenti non compila
+        //! Il typename è valido qui sia per first che per last (sono entrambi Ite)
+        vector(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first,
+            Ite last, const allocator_type &alloc = allocator_type());
+        vector(const vector &src);
+        virtual ~vector(void);
 
     private:
         //* ------------- ATTRIBUTI CLASSE -------------
