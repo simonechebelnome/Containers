@@ -103,8 +103,28 @@ namespace ft {
         typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
         //* ------------- METODI CLASSE -------------
+        explicit vector(const allocator_type &alloc = allocator_type()); //* Qui sto chiamando il costruttore di std::allocator
+        explicit vector(size_type size, const value_type &val = value_type(),
+		    const allocator_type &alloc = allocator_type());
 
-        
+    private:
+        //* ------------- ATTRIBUTI CLASSE -------------
+        //? Devo metterli necessariamente in fondo poichè devono essere privati
+        value_type              *_data;
+        allocator_type			_alloc;
+	    size_type				_size;
+	    size_type				_capacity;
+	    const static size_type	_max_size; //! Le variabili statiche non vanno mai inizializzate dal costruttore
+
+        //? I metodi che seguono gestiscono L'ALLOCAZIONE DI MEMORIA
+        //? Abbiamo due create data, in uno è possibile definire un RANGE usando gli iteratori
+        template<typename Ite>
+        void            _create_data(difference_type capacity, Ite first, Ite last);
+        void            _create_data(size_type size, const value_type &val = value_type());
+        void            _destroy_data(void);
+        template<typename Ite, typename Iterator>
+        static void     _cpy_data(Ite start, Iterator first, Iterator last);
+        void            _cpy_content(vector &vct);
 
 
     };
