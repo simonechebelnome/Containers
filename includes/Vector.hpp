@@ -24,20 +24,20 @@ namespace ft {
 
     template<typename T, typename Alloc>
     void	vector<T, Alloc>::_create_data(size_type size, const value_type &val) {
-	    this->_destroy_data();
-	    this->_data = this->_alloc.allocate(size);
-	    for (size_type i = 0; i < size; ++i)
-		    this->_alloc.construct(&this->_data[i], val); //? Construct, appunto, costruisce l'oggetto con i valori effettivi
-	    this->_size = size; this->_capacity = size; //? Nota come l'assegnazione venga fatta qui e non nel costruttore
+        this->_destroy_data();
+        this->_data = this->_alloc.allocate(size);
+        for (size_type i = 0; i < size; ++i)
+            this->_alloc.construct(&this->_data[i], val); //? Construct, appunto, costruisce l'oggetto con i valori effettivi
+        this->_size = size; this->_capacity = size; //? Nota come l'assegnazione venga fatta qui e non nel costruttore
     }
 
     template<typename T, typename Alloc>
     void	vector<T, Alloc>::_destroy_data(void) {
-	    if (!this->_data)
-		    return ;
-	    this->clear();
-	    this->_alloc.deallocate(this->_data, this->_capacity);
-	    this->_data = NULL; this->_size = 0; this->_capacity = 0;
+        if (!this->_data)
+            return ;
+        this->clear();
+        this->_alloc.deallocate(this->_data, this->_capacity);
+        this->_data = NULL; this->_size = 0; this->_capacity = 0;
     }
 
     //? Copia il contenuto di un vettore passato come parametro nell'istanza dell'oggetto attuale

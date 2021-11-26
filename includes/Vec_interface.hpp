@@ -105,16 +105,16 @@ namespace ft {
         //* ------------- METODI CLASSE -------------
         explicit vector(const allocator_type &alloc = allocator_type()); //* Qui sto chiamando il costruttore di std::allocator
         explicit vector(size_type size, const value_type &val = value_type(),
-		    const allocator_type &alloc = allocator_type());
+            const allocator_type &alloc = allocator_type());
 
     private:
         //* ------------- ATTRIBUTI CLASSE -------------
         //? Devo metterli necessariamente in fondo poichè devono essere privati
         value_type              *_data;
         allocator_type			_alloc;
-	    size_type				_size;
-	    size_type				_capacity;
-	    const static size_type	_max_size; //! Le variabili statiche non vanno mai inizializzate dal costruttore
+        size_type				_size;
+        size_type				_capacity;
+        const static size_type	_max_size; //! Le variabili statiche non vanno mai inizializzate dal costruttore
 
         //? I metodi che seguono gestiscono L'ALLOCAZIONE DI MEMORIA
         //? Abbiamo due create data, in uno è possibile definire un RANGE usando gli iteratori
