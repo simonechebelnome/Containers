@@ -156,10 +156,10 @@ namespace ft {
         //* ##### MODIFICATORI #####
 
         template <class Ite>
-	    void		assign(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first, Ite last);
-	    void		assign(size_type n, const value_type &val);
+        void		assign(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first, Ite last);
+        void		assign(size_type n, const value_type &val);
         void		push_back(const value_type &val);
-	    void		pop_back(void);
+        void		pop_back(void);
 
         //? Gli insert sono un pò bastardi, inseriscono elementi a partire dalla posizione specificata
         //? Quindi se la nuova size supera la capacity attuale (cioè tipo sempre) siamo costretti a reallocare
