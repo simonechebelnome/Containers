@@ -49,48 +49,151 @@ namespace ft {
     //* ##### IMPLEMENTAZIONE ITERATORI #####
     //? Nota come i tipi vadano ogni volta ridefiniti nell'implementazione
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::iterator vector<T, Alloc>::begin(void) {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    iterator vector<T, Alloc>::begin(void) {
         return (iterator(this->_data));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin(void) const {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_iterator vector<T, Alloc>::begin(void) const {
         return (const_iterator(this->_data));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::iterator vector<T, Alloc>::end(void) {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    iterator vector<T, Alloc>::end(void) {
         return (iterator(&this->_data[this->_size]));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end(void) const {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_iterator vector<T, Alloc>::end(void) const {
         return (const_iterator(&this->_data[this->_size]));
     }
 
     //! Nota come per il reverse_iterator il return value sia INVERTITO!
     
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rbegin(void) {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reverse_iterator vector<T, Alloc>::rbegin(void) {
         return (reverse_iterator(&this->_data[this->_size]));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rbegin(void) const {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reverse_iterator vector<T, Alloc>::rbegin(void) const {
         return (const_reverse_iterator(&this->_data[this->_size]));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rend(void) {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reverse_iterator vector<T, Alloc>::rend(void) {
         return (reverse_iterator(this->_data));
     }
 
-    template<typename T, typename Alloc>
-    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rend(void) const {
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reverse_iterator vector<T, Alloc>::rend(void) const {
         return (const_reverse_iterator(this->_data));
     }
 
+    //* ###### CAPACITY ######
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    size_type vector<T, Alloc>::size(void) const {
+        return(this->_size);
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    size_type vector<T, Alloc>::capacity(void) const {
+        return(this->_capacity);
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    size_type vector<T, Alloc>::max_size(void) const {
+        return(this->_max_size);
+    }
+
+    template<typename T, typename Alloc>
+    bool vector<T, Alloc>::empty(void) const {
+        return(this->size == 0 ? true : false);
+    }
+
+    template<typename T, typename Alloc>
+    void vector<T, Alloc>::reserve(size_type n) {
+        //* Controlliamo inanzitutto che n non sia più grande della dimensione massima
+        if(n > this->max_size())
+            throw std::length_error("error:: 'n' exceeds maximum storage value");
+        //* Allo stesso tempo, non ha senso riservare spazio minore della capacity
+        //? Reminder che la capacity rappresenta il NUMERO CORRENTE di elementi nel vettore
+        if(n <= this->capacity())
+            return ;
+        this->_create_data(n, this->begin(), this->end());
+    }
+
+    template<typename T, typename Alloc>
+    void		vector<T, Alloc>::resize(size_type size, value_type val) {
+        if (size < this->_size)
+        {
+            //* Se il size che passiamo è minore, distruggiamo tutto quello che viene dopo
+            while (size < this->_size)
+                this->_alloc.destroy(&this->_data[--this->_size]);
+        }
+        else
+        {
+            size_type const &lambda = this->_size;
+
+            //* Se size è maggiore del _size attuale, tocca reallocare
+            if (size <= this->_capacity)
+                ;
+            else if (size <= lambda * 2)
+                this->reserve(lambda * 2);
+            else
+                this->reserve(size);
+            while (this->_size < size)
+                this->_alloc.construct(&this->_data[this->_size++], val);
+        }
+    }
+
+    //* ##### ACCESSO ELEMENTI #####
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reference		vector<T, Alloc>::operator[](size_type n) {
+        return this->_data[n];
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reference	vector<T, Alloc>::operator[](size_type n) const {
+        return this->_data[n];
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reference		vector<T, Alloc>::at(size_type n) {
+        if (n < this->_size)
+            return ((*this)[n]);
+        throw std::out_of_range("error:: n is out of range");
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reference	vector<T, Alloc>::at(size_type n) const {
+        if (n < this->_size)
+            return ((*this)[n]);
+        throw std::out_of_range("error:: n is out of range");
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reference		vector<T, Alloc>::front(void) {
+        return (*this)[0];
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reference	vector<T, Alloc>::front(void) const {
+        return (*this)[0];
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    reference		vector<T, Alloc>::back(void) {
+        return (*this)[this->_size - 1];
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    const_reference	vector<T, Alloc>::back(void) const {
+        return (*this)[this->_size - 1];
+    }
 
     //* ------ ATTRIBUTI PRIVATI -------
 

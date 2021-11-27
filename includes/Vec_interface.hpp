@@ -129,6 +129,30 @@ namespace ft {
         reverse_iterator        rend(void);
         const_reverse_iterator  rend(void) const;
 
+        //* ###### METODI CAPACITY ######
+
+        //? I primi tre sono sostanzialmente getter
+        size_type   size(void) const;
+        size_type   capacity(void) const;
+        size_type   max_size(void) const;
+        bool        empty(void) const;
+        void        reserve(size_type n);
+
+        void        resize(size_type size, value_type val = value_type());
+
+        //* ###### METODI ACCESSO ELEMENTI ######
+        //? La differenza fra [] e at() è che at controlla che l'index non sia out of bound
+        //? e throwa un'exception, l'element access operator non esegue questo controllo
+
+        reference           operator[](size_type n);
+        const_reference     operator[](size_type n) const;
+        reference           at(size_type n);
+        const_reference     at(size_type n) const;
+        reference           front(void);
+        const_reference     front(void) const;
+        reference           back(void);
+        const_reference     back(void) const;
+
     private:
         //* ------------- ATTRIBUTI CLASSE -------------
         //? Devo metterli necessariamente in fondo poichè devono essere privati
