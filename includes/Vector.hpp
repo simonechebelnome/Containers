@@ -195,6 +195,144 @@ namespace ft {
         return (*this)[this->_size - 1];
     }
 
+    //* ##### MODIFICATORI #####
+
+    //? Abbiamo due versioni di Assign, la prima costruisce i nuovi elementi basandosi sul range di iteratori
+    //? Questi iteratori DEVONO ESSERE INTERI (enable_if)
+
+    template<typename T, typename Alloc> template <class Ite>
+    void	vector<T, Alloc>::assign(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first, Ite last) {
+        size_type size = ft::itlen(first, last);
+
+        //* Ricorda che create data pulisce anche il container
+        if (size > this->_capacity)
+            this->_create_data(size, first, last);
+        else
+        {
+            this->clear();
+            while (first != last)
+                this->_alloc.construct(&this->_data[this->_size++], *first++);
+        }
+    }
+
+    //? In questo overload invece passiamo una size e la filliamo con lo stesso valore
+    template<typename T, typename Alloc>
+    void	vector<T, Alloc>::assign(size_type n, const value_type &val) {
+        if (n > this->_capacity)
+            this->_create_data(n, val);
+        else
+        {
+            //! Clear resetta la size a 0!
+            this->clear();
+            while (this->_size < n)
+                this->_alloc.construct(&this->_data[this->_size++], val);
+        }
+    }
+
+    //? Aggiunge un elemento alla fine
+    template<typename T, typename Alloc>
+    void		vector<T, Alloc>::push_back(const value_type &val) {
+        if (this->_size == this->_capacity)
+            this->resize(this->_size + 1, val);
+        else
+            this->_alloc.construct(&this->_data[this->_size++], val);
+    }
+
+    //? Distrugge l'ultimo elemento
+    template<typename T, typename Alloc>
+    void		vector<T, Alloc>::pop_back(void) {
+        this->_alloc.destroy(&this->_data[--this->_size]);
+    }
+
+    template<typename T, typename Alloc> typename vector<T, Alloc>::
+    iterator    vector<T, Alloc>::insert(iterator position, const value_type &val) {
+        difference_type idx = position - this->begin();
+
+        //* Posso chiamare l'altro overload di insert!
+        this->insert(position, 1, val);
+        return(iterator(this->begin() + idx));
+    }
+
+    template<typename T, typename Alloc>
+    void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &val) {
+        difference_type const	idx = position - this->begin();
+        difference_type const	old_end_idx = this->end() - this->begin();
+        iterator				old_end, end;
+
+        this->resize(this->_size + n);
+
+        end = this->end();
+        position = this->begin() + idx;
+        old_end = this->begin() + old_end_idx;
+        while (old_end != position)
+            *--end = *--old_end;
+        while (n-- > 0)
+            *position++ = val;
+    }
+
+    template<typename T, typename Alloc> template <class Ite>
+    void	vector<T, Alloc>::insert(iterator position, Ite first, typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type last) {
+        difference_type const	idx = position - this->begin();
+        difference_type const	old_end_idx = this->end() - this->begin();
+        iterator				old_end, end;
+
+        this->resize(this->_size + (ft::itlen(first, last)));
+
+        end = this->end();
+        position = this->begin() + idx;
+        old_end = this->begin() + old_end_idx;
+        while (old_end != position)
+            *--end = *--old_end;
+        while (first != last)
+            *position++ = *first++;
+    }
+
+    //? Erase, appunto, elimina elementi all'interno del vettore
+    //? Ha due overload, uno per un singolo elemento ed uno per un range di elementi
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator ite) {
+        //* Chiamata all'altro overload
+        return (this->erase(ite, ite + 1));
+    }
+
+    template<typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator first, iterator last) {
+        iterator tmp = first;
+        iterator end = this->end();
+        size_type deleted = ft::itlen(first, last);
+
+        //* Ok qui praticamente stiamo SHIFTANDO tutto ciò che va eliminato DOPO LAST
+        while (last != end)
+        {
+            *first = *last;
+            ++first;
+            ++last;
+        }
+        //* In questo modo basta chiamare destroy diminuendo la size (tanto è tutto alla fine)
+        while (deleted-- > 0)
+            this->_alloc.destroy(&this->_data[--this->_size]);
+        return (tmp);
+    }
+
+    //? Swap, per l'appunto, swappa due vettori a patto che siano dello STESSO TIPO
+    template<typename T, typename Alloc>
+    void	vector<T, Alloc>::swap(vector &x) {
+        //* Basta appoggiarsi ad un vettore temporaneo
+        vector<T, Alloc> tmp;
+
+        tmp._cpy_content(x);
+        x._cpy_content(*this);
+        this->_cpy_content(tmp);
+    }
+
+    //? Clear banalmente elimina tutto il contenuto del vettore
+    template<typename T, typename Alloc>
+    void	vector<T, Alloc>::clear(void) {
+        while (this->_size > 0)
+            this->_alloc.destroy(&this->_data[--this->_size]);
+    }
+
     //* ------ ATTRIBUTI PRIVATI -------
 
     template<typename T, typename Alloc> template <class Ite>
@@ -252,4 +390,5 @@ namespace ft {
         vct._data = NULL; vct._size = 0; vct._capacity = 0;
     }
 }
+
 # endif

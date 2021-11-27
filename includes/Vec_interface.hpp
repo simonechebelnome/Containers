@@ -153,6 +153,32 @@ namespace ft {
         reference           back(void);
         const_reference     back(void) const;
 
+        //* ##### MODIFICATORI #####
+
+        template <class Ite>
+	    void		assign(typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type first, Ite last);
+	    void		assign(size_type n, const value_type &val);
+        void		push_back(const value_type &val);
+	    void		pop_back(void);
+
+        //? Gli insert sono un pò bastardi, inseriscono elementi a partire dalla posizione specificata
+        //? Quindi se la nuova size supera la capacity attuale (cioè tipo sempre) siamo costretti a reallocare
+        //? Questo è ciò che rende i vettori relativamente LENTI rispetto ad altri tipi di container
+
+        //* Possiamo scegliere se addare un singolo elemento, fillare (sempre dello stesso elemento) o copiare un range
+        //* Chiaramente, per il range occorre sempre l'enable_if, solita storia
+
+        iterator	insert(iterator position, const value_type &val); //! Questa returna un iteratore che punta all'elemento inserito
+        void		insert(iterator position, size_type n, const value_type &val);
+        template <class Ite>
+            void	insert(iterator position, Ite first,
+                typename ft::enable_if<!std::numeric_limits<Ite>::is_integer, Ite>::type last);
+
+        iterator	erase(iterator ite);
+        iterator	erase(iterator first, iterator last);
+        void		swap(vector &x);
+        void		clear(void);
+        
     private:
         //* ------------- ATTRIBUTI CLASSE -------------
         //? Devo metterli necessariamente in fondo poichè devono essere privati
