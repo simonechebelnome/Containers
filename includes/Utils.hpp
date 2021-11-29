@@ -82,7 +82,19 @@ namespace ft {
         return (*first1 < *first2);
     }
 
-    //TODO IMPLEMENTARE LE ALTRE UTILS
+    //? Uno Struct è tecnicamente COME UNA CLASSE (puù avere un costruttore e dei metodi come nel caso qui sotto)
+    //? L'unica differenza è che di default i suoi membri vengono inizializzati come pubblici (nelle classi come privati)
+
+    template<typename T>
+    struct lstNode {
+        T           data;
+        lstNode     *prev;
+        lstNode     *next;
+
+        //* Di default, il nodo precedente ed il successivo sono lo stesso. Ricorda inoltre di chiamare il costruttore di T!
+        lstNode(const T &src = T()) : data(src), prev(this), next(this) {};
+    };
+    
 }
 
 #endif
