@@ -389,6 +389,117 @@ namespace ft {
         this->_capacity = vct._capacity;
         vct._data = NULL; vct._size = 0; vct._capacity = 0;
     }
+
+    //* Dobbiamo ancora inizializzare max size (che ricordiamo essere statica)
+    //? Max sixe dipende dal tipo di T, per questo occorre fare un controllo mirato
+    //? numeric_limits::max() restituisce il valore massimo per quel tipo specifico
+    template<typename T, typename Alloc>
+    const typename vector<T, Alloc>::size_type vector<T, Alloc>::_max_size =
+        std::numeric_limits<difference_type>::max() / (sizeof(value_type) / 2 ?: 1);
+
+    //* ##### IMPLEMENTAZIONE ITERATORI #####
+
+    //* Regular Iterator
+    //? Nota l'uso del doppio scope per accedere alla subclass
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator::reference
+        vector<T, Alloc>::iterator::operator*(void) const {
+        return (*this->_value);
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator::pointer
+        vector<T, Alloc>::iterator::operator->(void) const {
+        return (this->_value);
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator&
+        vector<T, Alloc>::iterator::operator+=(difference_type n) {
+        this->_value += n; return *this;
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator&
+        vector<T, Alloc>::iterator::operator-=(difference_type n) {
+        this->_value -= n; return *this;
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator::reference
+        vector<T, Alloc>::iterator::operator[](difference_type n) const {
+        return (this->_value[n]);
+    }
+
+    //* Const Iterator
+    //? Non vi sono differenze con l'iteratore normale
+    
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator::reference
+        vector<T, Alloc>::const_iterator::operator*(void) const {
+        return (*this->_value);
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator::pointer
+        vector<T, Alloc>::const_iterator::operator->(void) const {
+        return (this->_value);
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator&
+        vector<T, Alloc>::const_iterator::operator+=(difference_type n) {
+        this->_value += n; return *this;
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator&
+        vector<T, Alloc>::const_iterator::operator-=(difference_type n) {
+        this->_value -= n; return *this;
+    }
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator::reference
+        vector<T, Alloc>::const_iterator::operator[](difference_type n) const {
+        return (this->_value[n]);
+    }
+
+    //* ##### NON-MEMBER OVERLOADS #####
+    //? Definiamo degli op. overload ESTERNI alla classe (quindi che prendono DUE ARGOMENTI)
+    //? In realtà, overload di questo tipo possono anche essere dichiarati all'interno della classe
+    //? Basta soltanto avere l'accortezza di utilizzare la keyword FRIEND
+
+    template<typename T, typename Alloc>
+    bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+        if (lhs.size() != rhs.size())
+            return false;
+        return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    }
+
+    template <class T, class Alloc>
+    bool	operator< (const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+        return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
+
+    template <class T, class Alloc>
+    bool	operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+        return !(rhs < lhs);
+    }
+
+    template <class T, class Alloc>
+    bool	operator> (const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+        return (rhs < lhs);
+    }
+
+    template <class T, class Alloc>
+    bool	operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+        return !(lhs < rhs);
+    }
+
+    template <class T, class Alloc>
+    void	swap(vector<T, Alloc> &x, vector<T, Alloc> &y) { x.swap(y); }
+    
 }
 
 # endif

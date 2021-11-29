@@ -42,8 +42,8 @@ namespace ft {
 
             reference			operator*(void) const;
             pointer				operator->(void) const;
-            const_iterator		&operator+=(difference_type n);
-            const_iterator		&operator-=(difference_type n);
+            iterator		    &operator+=(difference_type n);
+            iterator		    &operator-=(difference_type n);
             reference			operator[](difference_type n) const;
 
             //* Per le seguenti posso direttamente utilizzare i metodi della base class (super)
