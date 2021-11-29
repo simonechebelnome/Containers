@@ -79,7 +79,7 @@ namespace ft {
             return (first2 != last2);
         else if (first2 == last2)
             return (false);
-        return (*firt1 < *first2);
+        return (*first1 < *first2);
     }
 
     //TODO IMPLEMENTARE LE ALTRE UTILS

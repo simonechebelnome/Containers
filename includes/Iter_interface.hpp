@@ -8,7 +8,7 @@
 namespace ft {
 
     template<typename T>
-    class RanIter {
+    class RandIte {
     protected:		
         T		*_value; //* Questo è un puntatore al tipo di elemento che è stato passato, ergo, ne stiamo storando il valore
     
@@ -16,34 +16,34 @@ namespace ft {
         typedef T			value_type;
         typedef ptrdiff_t	difference_type; //* Ptrdiff stora la differenza tra due puntatori
 
-        RanIter(void);
-        RanIter(T *value); //* Qui possiamo passare un valore per inizializzare
-        RanIter(RanIter const &copy);
-        virtual ~RanIter(void);
-        RanIter &operator=(RanIter const &rhs);
+        RandIte(void);
+        RandIte(T *value); //* Qui possiamo passare un valore per inizializzare
+        RandIte(RandIte const &copy);
+        virtual ~RandIte(void);
+        RandIte &operator=(RandIte const &rhs);
 
-        //? Operator Override tra RanIteri
+        //? Operator Override tra RandItei
 
-        bool	operator==(RanIter const &rhs) const;
-        bool	operator!=(RanIter const &rhs) const;
-        bool	operator<(RanIter const &rhs) const;
-        bool	operator<=(RanIter const &rhs) const;
-        bool	operator>(RanIter const &rhs) const;
-        bool	operator>=(RanIter const &rhs) const;
+        bool	operator==(RandIte const &rhs) const;
+        bool	operator!=(RandIte const &rhs) const;
+        bool	operator<(RandIte const &rhs) const;
+        bool	operator<=(RandIte const &rhs) const;
+        bool	operator>(RandIte const &rhs) const;
+        bool	operator>=(RandIte const &rhs) const;
 
-        //? RanIter<T> restituisce un oggetto RanItere
+        //? RandIte<T> restituisce un oggetto RandItee
 
-        RanIter<T>	&operator++(void);
-        RanIter<T>	&operator--(void);
-        RanIter<T>	operator++(int);
-        RanIter<T>	operator--(int);
+        RandIte<T>	&operator++(void);
+        RandIte<T>	&operator--(void);
+        RandIte<T>	operator++(int);
+        RandIte<T>	operator--(int);
 
-        difference_type		operator-(RanIter const &rhs) const;
-        RanIter<T>			operator+(difference_type n) const;
-        RanIter<T>			operator-(difference_type n) const;
+        difference_type		operator-(RandIte const &rhs) const;
+        RandIte<T>			operator+(difference_type n) const;
+        RandIte<T>			operator-(difference_type n) const;
 
         //* I metodi definiti con friend possono anche essere usati singolarmente al di fuori dello scope della classe
-        friend RanIter<T>	operator+(difference_type n, RanIter const &rhs)
+        friend RandIte<T>	operator+(difference_type n, RandIte const &rhs)
             { return rhs.operator+(n); };	
     };
 }

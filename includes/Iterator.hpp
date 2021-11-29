@@ -6,75 +6,75 @@
 namespace ft {
 
     template <typename T>
-    RanIter<T>::RanIter(void) : _value(NULL) {
+    RandIte<T>::RandIte(void) : _value(NULL) {
         return ;
     }
 
     template <typename T>
-    RanIter<T>::RanIter(T *src) : _value(src) {
+    RandIte<T>::RandIte(T *src) : _value(src) {
         return ;
     }
 
     template <typename T>
-    RanIter<T>::RanIter(RanIter const &copy) {
-        *this = src;
+    RandIte<T>::RandIte(RandIte const &copy) {
+        *this = copy;
     }
 
     template <typename T>
-    RanIter<T>::~RanIter(void) {
+    RandIte<T>::~RandIte(void) {
         return ;
     }
 
     template <typename T>
-    RanIter<T> &RanIter<T>::operator=(RanIter const &rhs) {
+    RandIte<T> &RandIte<T>::operator=(RandIte const &rhs) {
         if (this == &rhs)
             return (*this);
-        *this->_value = rhs._value;
+        this->_value = rhs._value;
         return (*this);
     }
 
     template <typename T>
-    bool RanIter<T>::operator==(RanIter const &rhs) const {
+    bool RandIte<T>::operator==(RandIte const &rhs) const {
         return (this->_value == rhs._value);
     }
 
     template <typename T>
-    bool RanIter<T>::operator!=(RanIter const &rhs) const {
+    bool RandIte<T>::operator!=(RandIte const &rhs) const {
         return (this->_value != rhs._value);
     }
 
     template <typename T>
-    bool RanIter<T>::operator<(RanIter const &rhs) const {
+    bool RandIte<T>::operator<(RandIte const &rhs) const {
         return (this->_value < rhs._value);
     }
 
     template <typename T>
-    bool RanIter<T>::operator<=(RanIter const &rhs) const {
+    bool RandIte<T>::operator<=(RandIte const &rhs) const {
         return (this->_value <= rhs._value);
     }
 
     template <typename T>
-    bool RanIter<T>::operator>(RanIter const &rhs) const {
+    bool RandIte<T>::operator>(RandIte const &rhs) const {
         return (this->_value > rhs._value);
     }
 
     template <typename T>
-    bool RanIter<T>::operator>=(RanIter const &rhs) const {
+    bool RandIte<T>::operator>=(RandIte const &rhs) const {
         return (this->_value >= rhs._value);
     }
 
-    //? Queste due returnano l'RanItere prima che venga incrementato
+    //? Queste due returnano l'RandItee prima che venga incrementato
 
     template <typename T>
-    RanIter<T> RanIter<T>::operator++(int) {
-        RanIter<T>	tmp(*this);
+    RandIte<T> RandIte<T>::operator++(int) {
+        RandIte<T>	tmp(*this);
         ++this->_value;
         return(tmp);
     }
 
     template <typename T>
-    RanIter<T> RanIter<T>::operator--(int) {
-        RanIter<T>	tmp(*this);
+    RandIte<T> RandIte<T>::operator--(int) {
+        RandIte<T>	tmp(*this);
         --this->_value;
         return(tmp);
     }
@@ -82,31 +82,31 @@ namespace ft {
     //? Questi returnano con il valore già incrementato
 
     template <typename T>
-    RanIter<T> &RanIter<T>::operator++(void) {
+    RandIte<T> &RandIte<T>::operator++(void) {
         ++this->_value;
         return(*this);
     }
 
     template <typename T>
-    RanIter<T> &RanIter<T>::operator--(void) {
+    RandIte<T> &RandIte<T>::operator--(void) {
         --this->_value;
         return(*this);
     }
 
     template <typename T>
-    typename RanIter<T>::difference_type
-        RanIter<T>::operator-(RanIter const &rhs) const {
+    typename RandIte<T>::difference_type
+        RandIte<T>::operator-(RandIte const &rhs) const {
             return(this->_value - rhs._value);
     }
 
     template <typename T>
-    RanIter<T>	RanIter<T>::operator+(difference_type n) const {
-            return(RanIter(this->_value + n));
+    RandIte<T>	RandIte<T>::operator+(difference_type n) const {
+            return(RandIte(this->_value + n));
     }
 
     template <typename T>
-    RanIter<T>	RanIter<T>::operator-(difference_type n) const {
-            return(RanIter(this->_value - n));
+    RandIte<T>	RandIte<T>::operator-(difference_type n) const {
+            return(RandIte(this->_value - n));
     }
 }
 

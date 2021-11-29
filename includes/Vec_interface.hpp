@@ -6,7 +6,7 @@
 # include "Utils.hpp"
 
 namespace ft {
-    template<typename T, typename Allocator = std::allocator<T>>
+    template<typename T, typename Allocator = std::allocator<T> >
     class vector {
     public:
         typedef T                                           value_type;
@@ -20,15 +20,15 @@ namespace ft {
         typedef size_t										size_type;
 
         //* Iterator è una classe nestata, per enfatizzare che fa parte di questa specifica interfaccia e che si usano con oggetti di tipo Vector
-        //? Quando erediti da un template devi necessariamente specificare il tipo tra le parentesi angolari <>, questo perchè RanIter preso singolarmente NON E' UNA CLASSE
-        //? RanIter preso da solo è un class Template, ovvero un blueprint per la generazione di classi. Classi possono essere RanIter<int> o RanIter<std::string>
-        class iterator : public RanIter<value_type> {
+        //? Quando erediti da un template devi necessariamente specificare il tipo tra le parentesi angolari <>, questo perchè RandIte preso singolarmente NON E' UNA CLASSE
+        //? RandIte preso da solo è un class Template, ovvero un blueprint per la generazione di classi. Classi possono essere RandIte<int> o RandIte<std::string>
+        class iterator : public RandIte<value_type> {
         protected:
-            typedef RanIter<value_type>     super;
-            iterator(value_type *src) : RanIter<value_type>(src) {}; //* Qui ci basta semplicemente chiamare il costruttore della base class
+            typedef RandIte<value_type>     super;
+            iterator(value_type *src) : RandIte<value_type>(src) {}; //* Qui ci basta semplicemente chiamare il costruttore della base class
         
         private:
-            iterator(const RanIter<value_type> &copy) : RanIter<value_type>(src) {}; //* Copy Constructor base class
+            iterator(const RandIte<value_type> &copy) : RandIte<value_type>(copy) {}; //* Copy Constructor base class
 
         public:
             iterator(void) : RandIte<value_type>() {}; //* Default Constructor
@@ -67,7 +67,7 @@ namespace ft {
         //? Non basta, serve anche un CONST_ITERATOR. Ovvero, un iterator che non ci consente di modificare il valore a cui sta puntando.
         //* L'implementazione è identica a quella dell'iteratore normale, semplicemente punta ad un const value (const T*)
 
-        class const_iterator : public RanIter<value_type> {
+        class const_iterator : public RandIte<value_type> {
         protected:
             typedef RandIte<value_type> super;
             const_iterator(value_type *src) : RandIte<value_type>(src) {};
