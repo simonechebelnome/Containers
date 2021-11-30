@@ -38,6 +38,8 @@ namespace ft {
             reference	operator*(void) const;
             pointer		operator->(void) const;
 
+            //? Questa roba proprio non sono riuscito a capire cosa cazzo faccia :/
+            //? Pare sia un getter per il value di node, ma non capisco se sia un overload...
             operator lstIte<const Spe, node_type>(void) const {
                 return lstIte<const Spe, node_type>(this->_node);
             }
@@ -55,7 +57,9 @@ namespace ft {
     lstIte<Spe, node_type>::lstIte(void) : _node(NULL) { return ; }
 
     template <typename Spe, typename node_type>
-    lstIte<Spe, node_type>::lstIte(node_type *src) : _node(src) { return ; }
+    lstIte<Spe, node_type>::lstIte(node_type *src) {
+        this->_node = src;
+    }
 
     template <typename Spe, typename node_type>
     lstIte<Spe, node_type>::lstIte(const lstIte &src) { *this = src; }

@@ -91,7 +91,7 @@ namespace ft {
         lstNode     *prev;
         lstNode     *next;
 
-        //* Di default, il nodo precedente ed il successivo sono lo stesso. Ricorda inoltre di chiamare il costruttore di T!
+        //* Di default, il nodo precedente ed il successivo sono lo stesso. Ricorda inoltre di chiamare il costruttore di T!    
         lstNode(const T &src = T()) : data(src), prev(this), next(this) {};
     };
     
