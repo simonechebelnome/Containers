@@ -12,7 +12,7 @@ namespace ft {
     template <typename Spe, typename node_type>
     class lstIte {
         protected:
-            //* Al nodo possono accedere solo le classi che ereditano
+            //* Il list iterator altro non è che un puntatore ad un nodo
             node_type						*_node;
             lstIte(node_type *src);
 

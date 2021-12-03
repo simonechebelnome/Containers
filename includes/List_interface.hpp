@@ -14,7 +14,7 @@
 namespace ft {
 
     //* Non ti sorprenderà vedere come l'interfaccia sia praticamente quasi la stessa di Vector
-    template <typename T, typename Alloc = std::allocator<T> >
+    template < typename T, typename Alloc = std::allocator<T> >
     class list {
     public:
         typedef T											value_type;
@@ -38,6 +38,8 @@ namespace ft {
 
         //* #################### FUNZIONI MEMBRO ####################
 
+        //! Ma che cazzo? Questo typedef non viene riconosciuto da VsCode....
+        //TODO RISOLVI QUESTA ROBA IN QUALCHE MODO
         explicit list(const allocator_type &alloc = allocator_type());
         explicit list(size_type size, const value_type &val = value_type(),
             const allocator_type &alloc = allocator_type());

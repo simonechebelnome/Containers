@@ -82,9 +82,13 @@ namespace ft {
         return (*first1 < *first2);
     }
 
-    //? Uno Struct è tecnicamente COME UNA CLASSE (puù avere un costruttore e dei metodi come nel caso qui sotto)
+    //? Uno Struct è tecnicamente COME UNA CLASSE (può avere un costruttore e dei metodi come nel caso qui sotto)
     //? L'unica differenza è che di default i suoi membri vengono inizializzati come pubblici (nelle classi come privati)
 
+    //? Ora, questa è una figata. Questo è chiamato NODO SENTINELLA, è una sorta di "dummy node" che viene sfruttato per le DOUBLY LINKED LIST
+    //? Ricorda che stai lavorando con una LISTA CIRCOLARE, quindi questo nodo sentinella è SIA L'INIZIO CHE LA FINE
+    //? Più precisamente, qui NEXT punta al primo Elemento, mentre PREV punta all'ultimo. E' un ciclo!.
+    //! Non dobbiamo stare neanche ad aggiornare i puntatori, basta inseirire elementi prima/dopo il nodo sentinella e veranno gestiti automaticamente
     template<typename T>
     struct lstNode {
         T           data;
