@@ -34,7 +34,7 @@ namespace ft {
         typedef ft::lstIte<value_type, node_type>			iterator;
         typedef ft::lstIte<const value_type, node_type>		const_iterator;
         typedef ft::reverse_iterator<iterator>				reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator
+        typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
         //* #################### FUNZIONI MEMBRO ####################
 
@@ -76,6 +76,8 @@ namespace ft {
         const_reference		front(void) const;
         reference			back(void);
         const_reference		back(void) const;
+
+        void                display(void);
 
         //* #################### Modificatori ####################
 
