@@ -41,8 +41,97 @@ namespace ft {
 
             template <class, class>
             friend class mapIte;
-
     };
-}
 
+    template <typename T, typename node_type>
+    mapIte<T, node_type>::mapIte(void) : _node(NULL) { return ; }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type>::mapIte(node_type *src) { this->_node = src; }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type>::mapIte(const mapIte &src) { *this = src; }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type>::~mapIte(void) { return ; }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type> &mapIte<T, node_type>::operator=(const mapIte &rhs) {
+        if (this == &rhs)
+            return (*this);
+        this->_node = rhs._node;
+        return (*this);
+    }
+
+    template <typename T, typename node_type> template <class U>
+    bool	mapIte<T, node_type>::operator==(const mapIte<U, node_type> &rhs) const {
+        return (this->_node == rhs._node);
+    }
+
+    template <typename T, typename node_type> template <class U>
+    bool	mapIte<T, node_type>::operator!=(const mapIte<U, node_type> &rhs) const {
+        return (this->_node != rhs._node);
+    }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type> &mapIte<T, node_type>::operator++(void) {v
+        if (this->_node->right != NULL)
+            this->_node = farLeft(this->_node->right);
+        else
+        {
+            node_type	*child = this->_node;
+
+            this->_node = this->_node->parent;
+            while (this->_node && child == this->_node->right)
+            {
+                child = this->_node;
+                this->_node = this->_node->parent;
+            }
+        }
+        return (*this);
+    }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type> mapIte<T, node_type>::operator++(int) {
+        mapIte	tmp(*this);
+        ++(*this);
+        return (tmp);
+    }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type>& mapIte<T, node_type>::operator--(void) {
+        if (this->_node->left != NULL)
+            this->_node = farRight(this->_node->left);
+        else
+        {
+            node_type	*child = this->_node;
+
+            this->_node = this->_node->parent;
+            while (this->_node && child == this->_node->left)
+            {
+                child = this->_node;
+                this->_node = this->_node->parent;
+            }
+        }
+        return (*this);
+    }
+
+    template <typename T, typename node_type>
+    mapIte<T, node_type> mapIte<T, node_type>::operator--(int) {
+        mapIte	tmp(*this);
+        --(*this);
+        return (tmp);
+    }
+
+    template <typename T, typename node_type>
+    typename mapIte<T, node_type>::reference mapIte<T, node_type>::operator*(void) const {
+        return (this->_node->data);
+    }
+
+    template <typename T, typename node_type>
+    typename mapIte<T, node_type>::pointer mapIte<T, node_type>::operator->(void) const {
+        return &this->operator*();
+    }
+
+}
 #endif 
