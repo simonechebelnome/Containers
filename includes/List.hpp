@@ -428,7 +428,6 @@ namespace ft {
         this->merge(x, ft_less<value_type>);
     }
 
-    //! Questo mergesort ricorsivo sfugge alla mia comprensione
     template<typename T, typename Alloc> template <class Compare>
     void	list<T, Alloc>::ft_mergesort(Compare comp) {
         if (this->_size <= 1)
