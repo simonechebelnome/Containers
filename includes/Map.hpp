@@ -128,6 +128,98 @@ namespace ft {
 
     //* ######################## Modificatori ########################
 
+    template<class Key, class T, class Compare, class Alloc>
+    ft::pair<typename map<Key, T, Compare, Alloc>::iterator, bool>
+    map<Key, T, Compare, Alloc>::insert(const value_type &val) {
+        ft::pair<iterator, bool> res;
+
+        //? Se esiste già non lo aggiunge, semplicemente returna quello già presente
+        //? Per altro, dato che count returna praticamente solo 1 o 0 possiamo usarlo come flag ed è molto adorabile
+        res.second = !this->count(val.first);
+        if (res.second == true)
+            this->_btree_add(new node_type(val));
+        res.first = this->find(val.first);
+        return (res);
+    }
+
+    template<class Key, class T, class Compare, class Alloc>
+    typename map<Key, T, Compare, Alloc>::iterator
+    map<Key, T, Compare, Alloc>::insert(iterator position, const value_type &val) {
+        //! Qui castiamo a void di fatto sopprimendo position, non ci serve.
+        //? btree_add contiene già l'algoritmo per inserire l'elemento nella posizione giusta
+        static_cast<void>(position); 
+        return this->insert(val).first;
+    }
+
+    template<class Key, class T, class Compare, class Alloc> template <class Ite>
+    void	map<Key, T, Compare, Alloc>::insert(Ite first, Ite last) {
+        while (first != last)
+            this->insert(*first++);
+    }
+
+    //? Possiamo eliminare un nodo passando una posizione, una chiave o un range
+
+    template<class Key, class T, class Compare, class Alloc>
+    void	map<Key, T, Compare, Alloc>::erase(iterator position) {
+        this->erase(position++, position);
+    }
+
+    template<class Key, class T, class Compare, class Alloc>
+    typename map<Key, T, Compare, Alloc>::size_type
+    map<Key, T, Compare, Alloc>::erase(const key_type &k) {
+        iterator element = this->find(k);
+
+        if (element == this->end())
+            return (0);
+        this->_btree_rm(element._node);
+        return (1);
+    }
+
+    template<class Key, class T, class Compare, class Alloc>
+    void	map<Key, T, Compare, Alloc>::erase(iterator first, iterator last) {
+        while (first != last)
+            this->_btree_rm((first++)._node);
+    }
+
+    template<class Key, class T, class Compare, class Alloc>
+    void	map<Key, T, Compare, Alloc>::swap(map &x) {
+        map tmp;
+
+        tmp._cpy_content(x);
+        x._cpy_content(*this);
+        this->_cpy_content(tmp);
+    }
+
+    template<class Key, class T, class Compare, class Alloc>
+    void	map<Key, T, Compare, Alloc>::clear(void) {
+        node_ptr ghost = this->end()._node;
+
+        if (this->_size == 0)
+            return ;
+        ghost->parent->right = NULL;
+        this->_btree_clear(this->_data);
+        this->_data = ghost;
+        this->_size = 0;
+    }
+
+    //* ######################## Osservatori ########################
+
+    //? Returna la funziona che compara le chiavi, semplicemente
+    template<class Key, class T, class Compare, class Alloc>
+    typename map<Key, T, Compare, Alloc>::key_compare
+    map<Key, T, Compare, Alloc>::key_comp(void) const {
+        return (key_compare());
+    }
+
+    //! Questo value_compare è un FUNCTOR (o Funtore), sono OGGETTI che possono essere trattati come FUNZIONI
+    //? Il funtore non è altro che una classe che esegue un overload sull'operatore (), di fatto rendendo quell'oggetto a tutti gli effetti una funzione
+    //? Questa è una delle tante figate del generic programming, in quanto almeno in teoria come programmatori siamo in grado di ASTRARRE qualsiasi cosa
+    template<class Key, class T, class Compare, class Alloc>
+    typename map<Key, T, Compare, Alloc>::value_compare
+    map<Key, T, Compare, Alloc>::value_comp(void) const {
+        return (value_compare(key_compare()));
+    }
+
     //* ######################## Operazioni ########################
 
     //? Trova un elemento che abbia la key == k, ne abbiamo una versione const ed una non const
@@ -383,5 +475,56 @@ namespace ft {
 
     //* ######################## Non-Member Overloads ########################
 
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        if (lhs.size() != rhs.size())
+            return false;
+        return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        return !(lhs == rhs);
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator< (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        return !(rhs < lhs);
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator> (const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        return (rhs < lhs);
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool	operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+        return !(lhs < rhs);
+    }
+
+    template <class Key, class T, class Compare, class Alloc>
+    void	swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y) {
+        x.swap(y);
+    }
+
+    //* ######################## Other ########################
+
+    //? Definiamo il FUNTORE per value_compare
+    template <class Key, class T, class Compare, class Alloc>
+    class	map<Key, T, Compare, Alloc>::value_compare {
+    public:
+        Compare comp;
+        value_compare(Compare c) : comp(c) { };
+        
+        bool	operator()(const value_type &x, const value_type &y) const {
+            return comp(x.first, y.first);
+        }
+    };
+    
 }
 #endif

@@ -18,7 +18,7 @@ namespace ft {
         typedef T											mapped_type;
         typedef pair<const key_type, mapped_type>			value_type; //? Es. std::map<std::string, int> dove string viene mappato ad int {"ciao", 10}
         typedef Compare										key_compare;
-        class												value_compare;
+        class												value_compare; //! Questo è un FUNCTOR (guarda Map.hpp)
 
         typedef Alloc										allocator_type;
         typedef typename allocator_type::reference			reference;
