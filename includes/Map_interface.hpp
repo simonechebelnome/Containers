@@ -20,7 +20,7 @@ namespace ft {
         typedef Compare										key_compare;
         class												value_compare; //! Questo è un FUNCTOR (guarda Map.hpp)
 
-        typedef Alloc										allocator_type;
+        typedef Allocator										allocator_type;
         typedef typename allocator_type::reference			reference;
         typedef typename allocator_type::const_reference	const_reference;
         typedef typename allocator_type::pointer			pointer;

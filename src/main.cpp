@@ -1,6 +1,7 @@
 #include "../includes/Vector.hpp"
 #include "../includes/List.hpp"
 #include "../includes/Stack.hpp"
+#include "../includes/Map.hpp"
 
 int main(){
 
