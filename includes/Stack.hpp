@@ -4,7 +4,7 @@
 # include "Utils.hpp"
 # include "Vector.hpp"
 
-//? Stack è un container adpater (ovvero, per funzionare ha bisogno di ereditare da un altro container, in questo caso Vector)
+//? Stack è un container adapter (ovvero, per funzionare ha bisogno di ereditare da un altro container, in questo caso Vector)
 //? Emula un sistema LIFO (last-in, first-out), ovvero il primo elemento che viene inserito è quello che verrà processato per  ultimo
 
 namespace ft {

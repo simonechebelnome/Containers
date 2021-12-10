@@ -144,13 +144,13 @@ namespace ft {
 
         //* Member elements
         pair(void) : first(), second() {};
-        template<typename T1, typename T2>
-        pair(const pair<T1, T2> &src) : first(src.first), second(src.second) {}; //* Questo è praticamente un copy constructor, costruisco partendo da un altro pair
+        template<typename F, typename S>
+        pair(const pair<F, S> &src) : first(src.first), second(src.second) {}; //* Questo è praticamente un copy constructor, costruisco partendo da un altro pair
         pair(const first_type &a, const second_type &b) : first(a), second(b) {};
 
         pair &operator=(const pair &src) {
             if (*this == src)
-                return ;
+                return (*this);
             this->first = src.first;
             this->second = src.second;
             return (*this);
